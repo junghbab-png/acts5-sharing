@@ -59,8 +59,12 @@ body {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.22;
   pointer-events: none;
+}
+
+.question-page .bg,
+.form-page .bg {
+  opacity: 0.22;
 }
 
 .overlay {
@@ -74,6 +78,11 @@ body {
   padding: 24px 18px 110px;
 }
 
+.hero-overlay {
+  justify-content: flex-end;
+  padding-bottom: 48px;
+}
+
 .card {
   width: min(90vw, 420px);
   background: var(--card-bg);
@@ -83,30 +92,19 @@ body {
   box-shadow: 0 8px 24px rgba(0,0,0,0.05);
 }
 
-.start-card {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
-.start-title {
-  font-size: 21px;
-  line-height: 1.6;
-  margin-bottom: 26px;
-  font-weight: 700;
-}
-
 .question-subtitle {
   font-size: 17px;
   line-height: 1.45;
   margin-bottom: 24px;
   font-weight: 700;
   word-break: keep-all;
+  letter-spacing: 0.02em;
 }
 
 .question-text {
   font-size: 16px;
   line-height: 2;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   white-space: pre-line;
   word-break: keep-all;
 }
@@ -189,20 +187,25 @@ button {
 </head>
 <body>
 
-<!-- 시작 -->
+<!-- 표지 -->
 <section class="page active">
-  <img src="./theme.jpg" class="bg" alt="배경" />
-  <div class="overlay">
-    <div class="card start-card">
-      <div class="start-title">예수를 깊이 생각하라</div>
-      <button onclick="next()">시작하기</button>
-    </div>
+  <img src="./cover.jpg" class="bg" alt="표지" />
+  <div class="overlay hero-overlay">
+    <button onclick="next()">시작하기</button>
+  </div>
+</section>
+
+<!-- 주제 & 본문 -->
+<section class="page">
+  <img src="./theme.jpg" class="bg" alt="주제와 본문" />
+  <div class="overlay hero-overlay">
+    <button onclick="next()">다음</button>
   </div>
 </section>
 
 <!-- 질문 1 -->
-<section class="page">
-  <img src="./qbg.jpg" class="bg" alt="배경" />
+<section class="page question-page">
+  <img src="./qbg.jpg" class="bg" alt="질문 배경" />
   <div class="overlay">
     <div class="card">
       <div class="question-subtitle">질문1. 예루살렘 입성 장면</div>
@@ -222,8 +225,8 @@ button {
 </section>
 
 <!-- 질문 2 -->
-<section class="page">
-  <img src="./qbg.jpg" class="bg" alt="배경" />
+<section class="page question-page">
+  <img src="./qbg.jpg" class="bg" alt="질문 배경" />
   <div class="overlay">
     <div class="card">
       <div class="question-subtitle">질문2. 마른 무화과나무 장면</div>
@@ -246,8 +249,8 @@ button {
 </section>
 
 <!-- 질문 3 -->
-<section class="page">
-  <img src="./qbg.jpg" class="bg" alt="배경" />
+<section class="page question-page">
+  <img src="./qbg.jpg" class="bg" alt="질문 배경" />
   <div class="overlay">
     <div class="card">
       <div class="question-subtitle">질문3. 예수님과 유다</div>
@@ -266,8 +269,8 @@ button {
 </section>
 
 <!-- 질문 4 -->
-<section class="page">
-  <img src="./qbg.jpg" class="bg" alt="배경" />
+<section class="page question-page">
+  <img src="./qbg.jpg" class="bg" alt="질문 배경" />
   <div class="overlay">
     <div class="card">
       <div class="question-subtitle">질문4. 배신의 현장에서</div>
@@ -293,8 +296,8 @@ button {
 </section>
 
 <!-- 기도제목 -->
-<section class="page">
-  <img src="./qbg.jpg" class="bg" alt="배경" />
+<section class="page form-page">
+  <img src="./qbg.jpg" class="bg" alt="기도제목 배경" />
   <div class="overlay">
     <div class="card">
       <div class="question-subtitle">기도제목</div>
