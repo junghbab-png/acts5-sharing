@@ -1,186 +1,382 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>고난주간 묵상</title>
 
 <style>
 @font-face {
   font-family: 'GmarketSans';
-  src: url('./GmarketSansTTFMedium.ttf');
+  src: url('./GmarketSansTTFMedium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Jalnan';
-  src: url('./Jalnan2.otf');
+  src: url('./Jalnan2.otf') format('opentype');
+}
+
+:root {
+  --text: #3f3f3f;
+  --button-bg: rgba(255,255,255,0.92);
+  --card-bg: rgba(255,255,255,0.82);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: linear-gradient(#bcd3df, #6faac1);
 }
 
 body {
-  margin: 0;
-  font-family: 'GmarketSans';
-  background: linear-gradient(#bcd3df, #6faac1);
-  text-align: center;
+  font-family: 'GmarketSans', sans-serif;
+  color: var(--text);
 }
 
-.container {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 20px;
+.page {
+  display: none;
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
 }
 
-.logo {
-  opacity: 0.08;
+.page.active {
+  display: block;
+}
+
+.bg {
   position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.overlay {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 18px 110px;
 }
 
 .card {
-  background: rgba(255,255,255,0.85);
-  border-radius: 20px;
-  padding: 30px 20px;
-  margin-top: 100px;
-  position: relative;
-  z-index: 2;
+  width: min(90vw, 420px);
+  background: var(--card-bg);
+  border-radius: 26px;
+  padding: 30px 22px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
 }
 
-h2 {
+.start-card {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.start-title {
+  font-size: 21px;
+  line-height: 1.6;
+  margin-bottom: 26px;
+  font-weight: 700;
+}
+
+.question-subtitle {
+  font-size: 17px;
+  line-height: 1.45;
+  margin-bottom: 24px;
+  font-weight: 700;
+  word-break: keep-all;
+}
+
+.question-text {
   font-size: 16px;
-  margin-bottom: 20px;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  white-space: pre-line;
+  word-break: keep-all;
 }
 
-.question {
-  line-height: 1.8;
-  font-size: 18px;
-  letter-spacing: 0.03em;
+.form-label {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-hint {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+input, textarea {
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-family: 'GmarketSans', sans-serif;
+  font-size: 16px;
+  margin-bottom: 18px;
+  background: rgba(255,255,255,0.96);
 }
 
 textarea {
-  width: 100%;
-  height: 80px;
-  margin-top: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  font-family: 'GmarketSans';
+  min-height: 170px;
+  resize: vertical;
+  line-height: 1.7;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-family: 'GmarketSans';
-}
-
-.btn-group {
-  margin-top: 20px;
+.nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  z-index: 10;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 18px;
 }
 
 button {
-  flex: 1;
-  margin: 5px;
-  padding: 12px;
-  border-radius: 20px;
+  min-width: 132px;
+  height: 54px;
   border: none;
-  font-family: 'Jalnan';
-  background: #eee;
+  border-radius: 999px;
+  background: var(--button-bg);
+  color: #222;
+  font-family: 'Jalnan', sans-serif;
+  font-size: 17px;
+  cursor: pointer;
 }
 
-.main-btn {
-  margin-top: 20px;
-  padding: 14px;
-  border-radius: 25px;
-  border: none;
-  background: #eee;
-  font-family: 'Jalnan';
+.done-text {
+  font-size: 22px;
+  line-height: 1.8;
+  font-weight: 700;
+  word-break: keep-all;
 }
 
-.hidden {
-  display: none;
+@media (min-width: 768px) {
+  .card {
+    width: min(70vw, 520px);
+    padding: 38px 28px;
+  }
+
+  .question-text {
+    font-size: 18px;
+  }
+
+  .question-subtitle {
+    font-size: 19px;
+  }
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-<img src="theme.jpg" class="logo">
-
-<!-- 시작 화면 -->
-<div id="start">
-  <div class="card">
-    <h2>예수를 깊이 생각하라</h2>
-    <button class="main-btn" onclick="nextPage()">시작하기</button>
-  </div>
-</div>
-
-<!-- 질문 페이지 -->
-<div id="page1" class="hidden">
-  <div class="card">
-    <h2>질문1. 예루살렘 입성 장면</h2>
-
-    <div class="question">
-      나는 오늘 예수님을<br><br>
-      나의 '소원을 이루어줄 왕'으로 맞이하고 있나요,<br><br>
-      아니면<br><br>
-      '나의 삶을 다스릴 왕'으로 맞이하고 있나요?
-    </div>
-
-    <textarea placeholder="기도제목을 입력하세요"></textarea>
-
-    <div class="btn-group">
-      <button onclick="prevPage()">이전</button>
-      <button onclick="nextPage()">다음</button>
+<!-- 시작 -->
+<section class="page active">
+  <img src="./theme.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card start-card">
+      <div class="start-title">예수를 깊이 생각하라</div>
+      <button onclick="next()">시작하기</button>
     </div>
   </div>
-</div>
+</section>
 
-<!-- 이름 입력 -->
-<div id="page2" class="hidden">
-  <div class="card">
-    <input placeholder="셀 이름 / 또래 이름 (예: 액오셀 07 정액브)">
-    
-    <div class="btn-group">
-      <button onclick="prevPage()">이전</button>
-      <button onclick="submit()">제출</button>
+<!-- 질문 1 -->
+<section class="page">
+  <img src="./qbg.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card">
+      <div class="question-subtitle">질문1. 예루살렘 입성 장면</div>
+      <div class="question-text">나는 오늘 예수님을
+
+나의 '소원을 이루어줄 왕'으로 맞이하고 있나요,
+
+아니면
+
+'나의 삶을 다스릴 왕'으로 맞이하고 있나요?</div>
     </div>
   </div>
-</div>
+  <div class="nav">
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">다음</button>
+  </div>
+</section>
+
+<!-- 질문 2 -->
+<section class="page">
+  <img src="./qbg.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card">
+      <div class="question-subtitle">질문2. 마른 무화과나무 장면</div>
+      <div class="question-text">무화과나무를 마르게 하신 사건에서 핵심은 다음과 같습니다.
+
+예수님께서는 내 신앙의 '열매 없음'을 엄중히 꾸짖으십니다.
+
+이와 같은 상황 앞에서 여러분은
+예수님의 권위 앞에 겸허히 엎드려 회개합니까,
+
+아니면
+
+'제 사정은 이렇습니다'라고 핑계대고 있습니까?</div>
+    </div>
+  </div>
+  <div class="nav">
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">다음</button>
+  </div>
+</section>
+
+<!-- 질문 3 -->
+<section class="page">
+  <img src="./qbg.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card">
+      <div class="question-subtitle">질문3. 예수님과 유다</div>
+      <div class="question-text">예수님이 '너희 중 하나가 나를 팔리라'고 하셨을 때,
+유다는 '주여 내니이까?'라고 되묻습니다.
+
+유다와 같은 상황에서,
+곧 예수님을 팔기로 마음먹은 상황에서
+여러분은 예수님의 말씀에 어떻게 반응할 것 같은지 나누어봅시다.</div>
+    </div>
+  </div>
+  <div class="nav">
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">다음</button>
+  </div>
+</section>
+
+<!-- 질문 4 -->
+<section class="page">
+  <img src="./qbg.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card">
+      <div class="question-subtitle">질문4. 배신의 현장에서</div>
+      <div class="question-text">예수님은 자신을 팔러 온 유다를 향해 끝까지 “친구여”라고 부르셨습니다.
+
+이 장면 앞에서 나는
+하나님보다 다른 것을 더 사랑하고,
+순종을 미루며,
+때로는 신앙을 숨겼던 나의 모습은 없었는지 돌아보게 됩니다.
+
+그런 나를 향해서도 여전히 “내 친구”라고 부르시는 예수님의 사랑이 마음에 실제로 다가오나요,
+
+아니면 아직도 멀게 느껴지나요?
+
+그리고 그 사랑 앞에서
+오늘 나는 어떤 선택을 하며 살아가고 싶나요?</div>
+    </div>
+  </div>
+  <div class="nav">
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">기도제목 적기</button>
+  </div>
+</section>
+
+<!-- 기도제목 -->
+<section class="page">
+  <img src="./qbg.jpg" class="bg" alt="배경" />
+  <div class="overlay">
+    <div class="card">
+      <div class="question-subtitle">기도제목</div>
+
+      <div class="form-label">셀이름 / 또래 이름</div>
+      <div class="form-hint">예: 액오셀 07 정액브</div>
+      <input id="name" type="text" placeholder="셀 이름 / 또래 이름을 입력해주세요" />
+
+      <div class="form-label">기도제목 작성</div>
+      <textarea id="prayer" placeholder="이번 주 기도제목을 적어주세요"></textarea>
+
+      <button onclick="save()">제출하기</button>
+    </div>
+  </div>
+  <div class="nav">
+    <button onclick="prev()">이전</button>
+  </div>
+</section>
 
 <!-- 완료 -->
-<div id="done" class="hidden">
-  <div class="card">
-    <h2>2026 고난주간,<br>예수님을 깊이 묵상하며 살아갑시다.</h2>
+<section class="page">
+  <div class="overlay">
+    <div class="card">
+      <div class="done-text">2026 고난주간,<br>예수님을 깊이 묵상하며 살아갑시다.</div>
+    </div>
   </div>
-</div>
+</section>
 
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script>
-let page = 0;
+const firebaseConfig = {
+  apiKey: "AIzaSyB2aPwJkBf7uftGOXBDKddK8wutIfoGfZE",
+  authDomain: "acts5awesome.firebaseapp.com",
+  projectId: "acts5awesome",
+  storageBucket: "acts5awesome.firebasestorage.app",
+  messagingSenderId: "845243191457",
+  appId: "1:845243191457:web:f3c01044e70a236630a0e0"
+};
 
-function nextPage() {
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("page1").classList.remove("hidden");
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-function prevPage() {
-  document.getElementById("page1").classList.add("hidden");
-  document.getElementById("start").classList.remove("hidden");
-}
+let current = 0;
+const pages = document.querySelectorAll(".page");
 
-function submit() {
-  document.getElementById("page2").classList.add("hidden");
-  document.getElementById("done").classList.remove("hidden");
-}
+window.next = function() {
+  if (current < pages.length - 1) {
+    pages[current].classList.remove("active");
+    current += 1;
+    pages[current].classList.add("active");
+    window.scrollTo(0, 0);
+  }
+};
+
+window.prev = function() {
+  if (current > 0) {
+    pages[current].classList.remove("active");
+    current -= 1;
+    pages[current].classList.add("active");
+    window.scrollTo(0, 0);
+  }
+};
+
+window.save = async function() {
+  const name = document.getElementById("name").value.trim();
+  const prayer = document.getElementById("prayer").value.trim();
+
+  if (!name || !prayer) {
+    alert("이름과 기도제목을 입력해주세요!");
+    return;
+  }
+
+  await addDoc(collection(db, "prayers"), {
+    name,
+    prayer,
+    createdAt: new Date()
+  });
+
+  next();
+};
 </script>
 
 </body>
