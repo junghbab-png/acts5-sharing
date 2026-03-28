@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>고난주간 묵상</title>
+
+<style>
+@font-face {
+    font-family: 'Gmarket';
+    src: url('./GmarketSansTTFMedium.ttf');
+}
+@font-face {
+    font-family: 'Jalnan';
+    src: url('./Jalnan2.otf');
+}
+
+body {
+    margin: 0;
+    font-family: 'Gmarket';
+    background: url('./theme.jpg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    color: #333;
+}
+
+.page {
+    display: none;
+    padding: 30px 20px;
+}
+
+.active {
+    display: block;
+}
+
+.title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.box {
+    background: rgba(255,255,255,0.85);
+    padding: 25px;
+    border-radius: 12px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+button {
+    margin: 20px 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Jalnan';
+    background: #eee;
+}
+
+input, textarea {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 시작 페이지 -->
+<div class="page active" id="page0">
+    <img src="./cover.jpg" width="200"><br><br>
+    <button onclick="next()">시작하기</button>
+</div>
+
+<!-- 질문 1 -->
+<div class="page" id="page1">
+    <div class="subtitle">질문1. 예루살렘 입성 장면</div>
+    <div class="box">
+        나는 오늘 예수님을<br><br>
+        나의 '소원을 이루어줄 왕'으로 맞이하고 있나요,<br><br>
+        아니면<br><br>
+        '나의 삶을 다스릴 왕'으로 맞이하고 있나요?
+    </div>
+    <textarea placeholder="기도제목을 입력하세요"></textarea><br>
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">다음</button>
+</div>
+
+<!-- 이름 입력 -->
+<div class="page" id="page2">
+    <div class="subtitle">이름 입력</div>
+    <input placeholder="셀 이름 / 또래 이름 (예: 액오셀 07 정액브)">
+    <br>
+    <button onclick="prev()">이전</button>
+    <button onclick="next()">제출</button>
+</div>
+
+<!-- 완료 -->
+<div class="page" id="page3">
+    <div class="box">
+        2026 고난주간,<br>
+        예수님을 깊이 묵상하며 살아갑시다.
+    </div>
+</div>
+
+<script>
+let current = 0;
+
+function next() {
+    document.getElementById("page" + current).classList.remove("active");
+    current++;
+    document.getElementById("page" + current).classList.add("active");
+}
+
+function prev() {
+    document.getElementById("page" + current).classList.remove("active");
+    current--;
+    document.getElementById("page" + current).classList.add("active");
+}
+</script>
+
+</body>
+</html>
