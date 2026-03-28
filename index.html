@@ -3,124 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>고난주간 묵상</title>
 
 <style>
 @font-face {
-    font-family: 'Gmarket';
-    src: url('./GmarketSansTTFMedium.ttf');
+  font-family: 'GmarketSans';
+  src: url('./GmarketSansTTFMedium.ttf');
 }
+
 @font-face {
-    font-family: 'Jalnan';
-    src: url('./Jalnan2.otf');
+  font-family: 'Jalnan';
+  src: url('./Jalnan2.otf');
 }
 
 body {
-    margin: 0;
-    font-family: 'Gmarket';
-    background: url('./theme.jpg') no-repeat center center fixed;
-    background-size: cover;
-    text-align: center;
-    color: #333;
+  margin: 0;
+  font-family: 'GmarketSans';
+  background: linear-gradient(#bcd3df, #6faac1);
+  text-align: center;
 }
 
-.page {
-    display: none;
-    padding: 30px 20px;
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.active {
-    display: block;
+.logo {
+  opacity: 0.08;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
 }
 
-.title {
-    font-size: 22px;
-    margin-bottom: 20px;
+.card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 30px 20px;
+  margin-top: 100px;
+  position: relative;
+  z-index: 2;
 }
 
-.subtitle {
-    font-size: 16px;
-    margin-bottom: 20px;
+h2 {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-.box {
-    background: rgba(255,255,255,0.85);
-    padding: 25px;
-    border-radius: 12px;
-    line-height: 1.8;
-    letter-spacing: 0.05em;
+.question {
+  line-height: 1.8;
+  font-size: 18px;
+  letter-spacing: 0.03em;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: 'GmarketSans';
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'GmarketSans';
+}
+
+.btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 button {
-    margin: 20px 10px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 20px;
-    font-family: 'Jalnan';
-    background: #eee;
+  flex: 1;
+  margin: 5px;
+  padding: 12px;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Jalnan';
+  background: #eee;
 }
 
-input, textarea {
-    width: 90%;
-    padding: 10px;
-    margin-top: 15px;
+.main-btn {
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 25px;
+  border: none;
+  background: #eee;
+  font-family: 'Jalnan';
+}
+
+.hidden {
+  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 시작 페이지 -->
-<div class="page active" id="page0">
-    <img src="./cover.jpg" width="200"><br><br>
-    <button onclick="next()">시작하기</button>
+<div class="container">
+
+<img src="theme.jpg" class="logo">
+
+<!-- 시작 화면 -->
+<div id="start">
+  <div class="card">
+    <h2>예수를 깊이 생각하라</h2>
+    <button class="main-btn" onclick="nextPage()">시작하기</button>
+  </div>
 </div>
 
-<!-- 질문 1 -->
-<div class="page" id="page1">
-    <div class="subtitle">질문1. 예루살렘 입성 장면</div>
-    <div class="box">
-        나는 오늘 예수님을<br><br>
-        나의 '소원을 이루어줄 왕'으로 맞이하고 있나요,<br><br>
-        아니면<br><br>
-        '나의 삶을 다스릴 왕'으로 맞이하고 있나요?
+<!-- 질문 페이지 -->
+<div id="page1" class="hidden">
+  <div class="card">
+    <h2>질문1. 예루살렘 입성 장면</h2>
+
+    <div class="question">
+      나는 오늘 예수님을<br><br>
+      나의 '소원을 이루어줄 왕'으로 맞이하고 있나요,<br><br>
+      아니면<br><br>
+      '나의 삶을 다스릴 왕'으로 맞이하고 있나요?
     </div>
-    <textarea placeholder="기도제목을 입력하세요"></textarea><br>
-    <button onclick="prev()">이전</button>
-    <button onclick="next()">다음</button>
+
+    <textarea placeholder="기도제목을 입력하세요"></textarea>
+
+    <div class="btn-group">
+      <button onclick="prevPage()">이전</button>
+      <button onclick="nextPage()">다음</button>
+    </div>
+  </div>
 </div>
 
 <!-- 이름 입력 -->
-<div class="page" id="page2">
-    <div class="subtitle">이름 입력</div>
+<div id="page2" class="hidden">
+  <div class="card">
     <input placeholder="셀 이름 / 또래 이름 (예: 액오셀 07 정액브)">
-    <br>
-    <button onclick="prev()">이전</button>
-    <button onclick="next()">제출</button>
+    
+    <div class="btn-group">
+      <button onclick="prevPage()">이전</button>
+      <button onclick="submit()">제출</button>
+    </div>
+  </div>
 </div>
 
 <!-- 완료 -->
-<div class="page" id="page3">
-    <div class="box">
-        2026 고난주간,<br>
-        예수님을 깊이 묵상하며 살아갑시다.
-    </div>
+<div id="done" class="hidden">
+  <div class="card">
+    <h2>2026 고난주간,<br>예수님을 깊이 묵상하며 살아갑시다.</h2>
+  </div>
+</div>
+
 </div>
 
 <script>
-let current = 0;
+let page = 0;
 
-function next() {
-    document.getElementById("page" + current).classList.remove("active");
-    current++;
-    document.getElementById("page" + current).classList.add("active");
+function nextPage() {
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("page1").classList.remove("hidden");
 }
 
-function prev() {
-    document.getElementById("page" + current).classList.remove("active");
-    current--;
-    document.getElementById("page" + current).classList.add("active");
+function prevPage() {
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden");
+}
+
+function submit() {
+  document.getElementById("page2").classList.add("hidden");
+  document.getElementById("done").classList.remove("hidden");
 }
 </script>
 
